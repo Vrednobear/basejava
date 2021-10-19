@@ -13,15 +13,23 @@ public class MainTestArrayStorage {
     public static void main(String[] args) {
         Resume r1 = new Resume();
         r1.setUuid("uuid1");
-        Resume r2 = new Resume();
-        r2.setUuid("uuid2");
+        Resume r9 = new Resume();
+        r9.setUuid("uuid9");
+        Resume r6 = new Resume();
+        r6.setUuid("uuid6");
         Resume r3 = new Resume();
         r3.setUuid("uuid3");
+        Resume r8 = new Resume();
+        r8.setUuid("uuid8");
+
 
         ARRAY_STORAGE.save(r1);
-        ARRAY_STORAGE.save(r1);
-        ARRAY_STORAGE.save(r2);
+        ARRAY_STORAGE.save(r9);
+        ARRAY_STORAGE.save(r6);
         ARRAY_STORAGE.save(r3);
+        ARRAY_STORAGE.save(r8);
+
+        ARRAY_STORAGE.get("uuid6");
 
         //System.out.println(Arrays.binarySearch(ARRAY_STORAGE.storage   ,0,ARRAY_STORAGE.size(),r2));
 
@@ -52,5 +60,6 @@ public class MainTestArrayStorage {
         for (Resume r : ARRAY_STORAGE.getAll()) {
             System.out.println(r);
         }
+        System.out.println("After");
     }
 }

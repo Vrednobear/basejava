@@ -6,29 +6,18 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    @Override
-    public void clear() {
 
+    @Override
+    protected void fillDeletedElement(int index) {
+        int numMoved = size - index -1;
+        System.arraycopy(storage, index + 1, storage, index, numMoved);
     }
 
     @Override
-    public void update(Resume r) {
-
-    }
-
-    @Override
-    public void save(Resume r) {
-
-    }
-
-    @Override
-    public void delete(String uuid) {
-
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
+    protected void insertElement(Resume r, int index) {
+        int insertInd = -index - 1;
+            System.arraycopy(storage, insertInd, storage, insertInd + 1, size() - insertInd);
+        storage[insertInd] = r;
     }
 
     //before binary search we have to order the array
@@ -38,6 +27,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     protected int getIndex(String uuid) {
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);
-        return Arrays.binarySearch(storage,0,size,searchKey);
+       // sort(storage);
+        return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 }
