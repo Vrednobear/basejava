@@ -23,6 +23,8 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
 
+        //System.out.println(Arrays.binarySearch(ARRAY_STORAGE.storage   ,0,ARRAY_STORAGE.size(),r2));
+
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
