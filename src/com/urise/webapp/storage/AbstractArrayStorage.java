@@ -1,5 +1,8 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -21,17 +24,20 @@ public abstract class AbstractArrayStorage implements Storage {
             storage[index] = r;
             System.out.println("The resume is updated");
         } else {
-            System.out.println("ERROR: required resume is not found");
+            throw new NotExistStorageException(r.getUuid());
+            //System.out.println("ERROR: required resume is not found");
         }
     }
 
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
-        if (index > 0) {
-            System.out.println("ERROR: " +
-                    "cannot save the resume that already exists");
+        if (index >= 0) {
+            throw new ExistStorageException(r.getUuid());
+//            System.out.println("ERROR: " +
+//                    "cannot save the resume that already exists");
         } else if (size == storage.length) {
-            System.out.println("ERROR: Not enough space for saving");
+            throw new StorageException("Storage overflow", r.getUuid());
+           // System.out.println("ERROR: Not enough space for saving");
         } else {
             insertElement(r, index);
             size++;
@@ -44,7 +50,8 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("ERROR: required resume is not found");
+            throw new NotExistStorageException(uuid);
+            //System.out.println("ERROR: required resume is not found");
         } else {
             fillDeletedElement(index);
             storage[size - 1] = null;
@@ -63,8 +70,9 @@ public abstract class AbstractArrayStorage implements Storage {
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("ERROR: required resume is not found");
-            return null;
+            throw new NotExistStorageException(uuid);
+//            System.out.println("ERROR: required resume is not found");
+//            return null;
         }
         return storage[index];
     }

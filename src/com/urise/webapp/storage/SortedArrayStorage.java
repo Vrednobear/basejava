@@ -25,8 +25,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     // binarySearch() is using compareTo;
     @Override
     protected int getIndex(String uuid) {
-        Resume searchKey = new Resume();
-        searchKey.setUuid(uuid);
+        Resume searchKey = new Resume(uuid);
        // sort(storage);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
