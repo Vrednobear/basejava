@@ -3,12 +3,13 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
-
 
     @Override
     protected void fillDeletedElement(int index) {
@@ -20,7 +21,8 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[size] = r;
     }
 
-    protected int getIndex(String uuid) {
+    @Override
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
@@ -28,6 +30,10 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
         return -1;
     }
+
+
+
+
 }
 
 

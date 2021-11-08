@@ -5,9 +5,12 @@ import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -18,68 +21,55 @@ public abstract class AbstractArrayStorage implements Storage {
         size = 0;
     }
 
-    public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index > 0) {
-            storage[index] = r;
-            System.out.println("The resume is updated");
-        } else {
-            throw new NotExistStorageException(r.getUuid());
-            //System.out.println("ERROR: required resume is not found");
-        }
-    }
-
-    public void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-//            System.out.println("ERROR: " +
-//                    "cannot save the resume that already exists");
-        } else if (size == storage.length) {
-            throw new StorageException("Storage overflow", r.getUuid());
-           // System.out.println("ERROR: Not enough space for saving");
-        } else {
-            insertElement(r, index);
-            size++;
-        }
-    }
-
-    protected abstract void insertElement(Resume r, int index);
-
-    @Override
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-            //System.out.println("ERROR: required resume is not found");
-        } else {
-            fillDeletedElement(index);
-            storage[size - 1] = null;
-            size--;
-        }
-
-    }
-
-    protected abstract void fillDeletedElement(int index);
-
-
     public int size() {
         return size;
-    }
-
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-//            System.out.println("ERROR: required resume is not found");
-//            return null;
-        }
-        return storage[index];
     }
 
     public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    protected abstract int getIndex(String uuid);
+    @Override
+    protected void doUpdate(Resume r, Object index) {
+        storage[(Integer) index] = r;
+    }
+
+    @Override
+    protected void doSave(Resume r, Object index) {
+        if (size == STORAGE_LIMIT) {
+            throw new StorageException("Storage overflow", r.getUuid());
+        } else {
+            insertElement(r, (Integer) index);
+            size++;
+        }
+    }
+
+    @Override
+    protected void doDelete(Object index) {
+        fillDeletedElement((Integer) index);
+        storage[size - 1] = null;
+        size--;
+    }
+
+    public List<Resume> doCopyAll() {
+        return Arrays.asList(Arrays.copyOfRange(storage,0,size));
+    }
+
+    @Override
+    protected Resume doGet(Object index) {
+        return storage[(Integer) index];
+    }
+
+    @Override
+    protected boolean isExist(Object index) {
+        return (Integer) index >= 0;
+    }
+
+    protected abstract void fillDeletedElement(int index);
+
+    protected abstract void insertElement(Resume r, int index);
+
+    @Override
+    protected abstract Integer getSearchKey(String uuid);
+
 }
