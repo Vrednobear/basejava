@@ -6,15 +6,20 @@ import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends Section {
-  private final List<String> values;
+    private static final long serialVersionUID = 1L;
+    private final List<String> values;
 
-    public ListSection(List <String> values) {
-        Objects.requireNonNull(values,"values must not be null");
+    public ListSection(List<String> values) {
+        Objects.requireNonNull(values, "values must not be null");
         this.values = values;
     }
 
+    public ListSection(String... values) {
+        this(Arrays.asList(values));
+    }
+
     public List<String> getValues() {
-        return values ;
+        return values;
     }
 
     @Override
@@ -32,7 +37,7 @@ public class ListSection extends Section {
 
     @Override
     public String toString() {
-      return values.toString();
+        return values.toString();
     }
 
 

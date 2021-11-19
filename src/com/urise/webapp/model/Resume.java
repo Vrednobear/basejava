@@ -1,5 +1,6 @@
 package com.urise.webapp.model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,7 +9,8 @@ import java.util.*;
 /**
  * Initial resume class
  */
-public class Resume implements Comparable<Resume> {
+public class Resume implements Comparable<Resume>, Serializable {
+    private static final long serialVersionUID = 1L;
 
     // Unique identifier
     private final String uuid;
@@ -50,6 +52,16 @@ public class Resume implements Comparable<Resume> {
     public Section getSection(SectionType type) {
         return sectionMap.get(type);
     }
+
+    public void addContact(ContactType type,String contact) {
+        contactMap.put(type,contact);
+    }
+
+    public void addSection(SectionType type,Section section) {
+        sectionMap.put(type,section);
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

@@ -1,54 +1,51 @@
 package com.urise.webapp.model;
 
 import java.io.ObjectStreamClass;
+import java.io.PipedOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.*;
 
-public class Organization {
+public class Organization implements Serializable {
+    private final String organizationName;
     private final Link organizationLink;
 
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final String description;
-    private final String title;
+    List<Experience> experiences;
 
-    public Organization(String organizationName, String url, LocalDate startDate, LocalDate endDate, String title, String description) {
-        Objects.requireNonNull(startDate, "startDate must not be null");
-        Objects.requireNonNull(endDate, "endDate must not be null");
-        Objects.requireNonNull(title, "title must not be null");
-
-        this.organizationLink = new Link(organizationName, url);
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.title = title;
-        this.description = description;
-
+    public Organization(String organizationName, String url, Experience...experiences) {
+        this(new Link(organizationName,url),Arrays.asList(experiences));
     }
+
+    public Organization(Link organizationLink,List<Experience> experiences) {
+        this.organizationName = organizationLink.getName();
+        this.organizationLink = organizationLink;
+        this.experiences = new ArrayList<>(experiences);
+    }
+
+    public void addExperience(Experience experience){
+        experiences.add(experience);
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return organizationLink.equals(that.organizationLink) &&
-                startDate.equals(that.startDate) &&
-                endDate.equals(that.endDate) &&
-                Objects.equals(description, that.description) &&
-                title.equals(that.title);
+        return organizationName.equals(that.organizationName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(organizationLink, startDate, endDate, description, title);
+        return Objects.hash(organizationName);
     }
 
     @Override
     public String toString() {
         return "Organization{" +
-                ", organizationLink=" + organizationLink +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", description='" + description + '\'' +
-                '}';
+                ", organizationName=" + organizationName + "\n" +
+                ", organizationLink=" + organizationLink + "\n" +
+                experiences.toString() + "\n";
     }
+
 }
