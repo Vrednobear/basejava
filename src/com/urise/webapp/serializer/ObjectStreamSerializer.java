@@ -1,29 +1,27 @@
-package com.urise.webapp.storage;
+package com.urise.webapp.serializer;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.serializer.SerializationStrategy;
 
 import java.io.*;
 
-public class ObjectStreamPathStorage extends AbstractPathStorage {
-    public ObjectStreamPathStorage(String dir) {
-        super(dir);
-    }
+public class ObjectStreamSerializer implements SerializationStrategy {
 
     @Override
-    protected void doWrite(Resume r, OutputStream os) throws IOException {
+    public void doWrite(Resume r, OutputStream os) throws IOException {
         try(ObjectOutputStream oos = new ObjectOutputStream(os)){
             oos.writeObject(r);
         }
     }
 
     @Override
-    protected Resume doRead(InputStream is) throws IOException {
+    public Resume doRead(InputStream is) throws IOException {
         Object object = null;
         try(ObjectInputStream ois = new ObjectInputStream(is)) {
             return (Resume) ois.readObject();
         } catch (ClassNotFoundException e) {
-            throw new StorageException("Error read resume",null);
-        }
+                throw new StorageException("Error read resume");
+            }
     }
 }
