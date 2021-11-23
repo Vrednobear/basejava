@@ -1,5 +1,8 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -9,16 +12,21 @@ import java.util.*;
 /**
  * Initial resume class
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Comparable<Resume>, Serializable {
     private static final long serialVersionUID = 1L;
 
     // Unique identifier
-    private final String uuid;
-    private final String fullName;
+    private  String uuid;
+    private String fullName;
 
     //private final
     private final EnumMap<ContactType, String> contactMap = new EnumMap<>(ContactType.class);
     private final EnumMap<SectionType, Section> sectionMap = new EnumMap<>(SectionType.class);
+
+    public Resume() {
+    }
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -61,7 +69,21 @@ public class Resume implements Comparable<Resume>, Serializable {
         sectionMap.put(type,section);
     }
 
-
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Resume resume = (Resume) o;
+//        return Objects.equals(uuid, resume.uuid) &&
+//                Objects.equals(fullName, resume.fullName) &&
+//                Objects.equals(contactMap, resume.contactMap) &&
+//                Objects.equals(sectionMap, resume.sectionMap);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(uuid, fullName, contactMap, sectionMap);
+//    }
 
     @Override
     public boolean equals(Object o) {

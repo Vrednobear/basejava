@@ -1,16 +1,22 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.ObjectStreamClass;
 import java.io.PipedOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
-    private final String organizationName;
-    private final Link organizationLink;
+    private String organizationName;
+    private Link organizationLink;
 
     List<Experience> experiences;
+
+    public Organization() {
+    }
 
     public Organization(String organizationName, String url, Experience...experiences) {
         this(new Link(organizationName,url),Arrays.asList(experiences));
@@ -32,7 +38,7 @@ public class Organization implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return organizationName.equals(that.organizationName);
+         return Objects.equals(organizationName,that.organizationName);
     }
 
     @Override

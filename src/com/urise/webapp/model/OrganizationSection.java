@@ -1,18 +1,24 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.*;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class OrganizationSection extends Section {
-  //private List<Organization> organizations;
-  private static final long serialVersionUID = 1L;
-  private Set<Organization> organizations;
+    //private List<Organization> organizations;
+    private static final long serialVersionUID = 1L;
+    private Set<Organization> organizations;
 
-    public OrganizationSection(Organization...organizations) {
+    public OrganizationSection() {
+    }
+
+    public OrganizationSection(Organization... organizations) {
         this(Set.of(organizations));
     }
 
     public OrganizationSection(Set<Organization> organizations) {
-        Objects.requireNonNull(organizations,"organizations must not be null");
+        Objects.requireNonNull(organizations, "organizations must not be null");
         this.organizations = organizations;
     }
 
@@ -22,8 +28,8 @@ public class OrganizationSection extends Section {
     }
 
 
-    public void putOrganization(Organization organization){
-        if(!organizations.contains(organization)){
+    public void putOrganization(Organization organization) {
+        if (!organizations.contains(organization)) {
             organizations.add(organization);
         }
     }

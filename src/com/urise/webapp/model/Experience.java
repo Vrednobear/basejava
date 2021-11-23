@@ -1,7 +1,11 @@
 package com.urise.webapp.model;
 
 import com.urise.webapp.util.DateUtil;
+import com.urise.webapp.util.LocalDateAdapter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
@@ -10,11 +14,17 @@ import java.util.Objects;
 
 import static com.urise.webapp.util.DateUtil.NOW;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Experience implements Serializable {
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final String description;
-    private final String title;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate startDate;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate endDate;
+    private String description;
+    private String title;
+
+    public Experience() {
+    }
 
     public Experience(LocalDate startDate, LocalDate endDate, String title, String description) {
         Objects.requireNonNull(startDate, "startDate must not be null");
