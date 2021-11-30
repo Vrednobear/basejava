@@ -32,6 +32,15 @@ public class Organization implements Serializable {
         experiences.add(experience);
     }
 
+    public String getOrganizationName() {
+        return organizationName;
+    }
+    public Link getOrganizationLink() {
+        return organizationLink;
+    }
+    public List<Experience> getExperiences() {
+        return experiences;
+    }
 
     @Override
     public boolean equals(Object o) {

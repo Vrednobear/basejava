@@ -34,16 +34,31 @@ public class Experience implements Serializable {
         this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;
-        this.description = description;
+        this.description = description == null ? "" : description;
+
     }
 
     public Experience(int startDateYear, Month startDateMonth, String title, String description) {
-        this(DateUtil.of(startDateYear,startDateMonth),NOW,title,description);
+        this(DateUtil.of(startDateYear, startDateMonth), NOW, title, description);
     }
+
     public Experience(int startDateYear, Month startDateMonth, int endDateYear, Month endDateMonth,
-            String title, String description) {
-        this(DateUtil.of(startDateYear,startDateMonth),
-                DateUtil.of(endDateYear,endDateMonth),title,description);
+                      String title, String description) {
+        this(DateUtil.of(startDateYear, startDateMonth),
+                DateUtil.of(endDateYear, endDateMonth), title, description);
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public String getTitle() {
+        return title;
     }
 
     @Override

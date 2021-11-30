@@ -69,7 +69,14 @@ public class Resume implements Comparable<Resume>, Serializable {
         sectionMap.put(type,section);
     }
 
-//    @Override
+    public EnumMap<ContactType, String> getContacts() {
+        return contactMap;
+    }
+    public EnumMap<SectionType, Section> getSections() {
+        return sectionMap;
+    }
+
+    //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) return true;
 //        if (o == null || getClass() != o.getClass()) return false;

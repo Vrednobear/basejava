@@ -103,7 +103,7 @@ public class ResumeTestData {
                 "Старший разработчик (backend)]", "Проектирование и разработка онлайн платформы управления проектами Wrike " +
                 "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                 "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-        Organization organization3 = new Organization("RIT Center", null);
+        Organization organization3 = new Organization("RIT Center", "rit.com");
         Experience experience3 = new Experience(LocalDate.of(2012, 4, 1), LocalDate.of(2014, 10, 1), "Java архитектор",
                 "Организация процесса разработки системы ERP для разных окружений: " +
                         "релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), " +
@@ -140,7 +140,7 @@ public class ResumeTestData {
         Experience experience7 = new Experience(LocalDate.of(1993, 9, 1),
                 LocalDate.of(1993, 7, 1), "\tИнженер (программист Fortran, C)", null);
         Experience experience8 = new Experience(LocalDate.of(1996, 7, 1),
-                LocalDate.of(1993, 7, 1), "\tАспирантура (программист С, С++)", null);
+                LocalDate.of(1993, 7, 1), "\tАспирантура (программист С, С++)", "null");
 
         organization4.addExperience(experience4);
         organization5.addExperience(experience5);

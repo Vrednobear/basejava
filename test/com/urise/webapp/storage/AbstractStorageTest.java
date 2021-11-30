@@ -28,18 +28,23 @@ public abstract class AbstractStorageTest {
 
     private static final Resume RESUME_1;
     private static final Resume RESUME_2;
+    private static final Resume RESUME_3;
+    private static final Resume RESUME_4;
 //    private static final Resume RESUME_1 = new Resume(UUID_1, FULLNAME_1);
 //    private static final Resume RESUME_2 = new Resume(UUID_2, FULLNAME_2);
-    private static final Resume RESUME_3 = new Resume(UUID_3, FULLNAME_3);
-    private static final Resume RESUME_4 = new Resume(UUID_4, FULLNAME_4);
+//    private static final Resume RESUME_3 = new Resume(UUID_3, FULLNAME_3);
+//    private static final Resume RESUME_4 = new Resume(UUID_4, FULLNAME_4);
 
     static {
+        RESUME_3 = ResumeTestData.createResume(UUID_3,FULLNAME_3);
+        RESUME_4 = ResumeTestData.createResume(UUID_4,FULLNAME_4);
+
         RESUME_1 = ResumeTestData.createResume(UUID_1, FULLNAME_1);
         RESUME_2 = new Resume(UUID_2, FULLNAME_2);
         RESUME_2.addSection(SectionType.OBJECTIVE, new TextSection("Text Section 1 obj"));
         RESUME_2.addSection(SectionType.PERSONAL, new TextSection("Text Section1 pers"));
-        RESUME_2.addSection(SectionType.ACHIEVEMENT, new ListSection("achievement1", "achievement2"));
-        RESUME_2.addSection(SectionType.QUALIFICATIONS, new ListSection("qualification1", "qualification2"));
+        RESUME_2.addSection(SectionType.ACHIEVEMENT, new ListSection("achievement1.", "achievement2."));
+        RESUME_2.addSection(SectionType.QUALIFICATIONS, new ListSection("qualification1.", "qualification2."));
         RESUME_2.addSection(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization("Microsoft", "ms.com",
                         new Experience(2021, Month.APRIL, "Developer", "Created Bing")),
