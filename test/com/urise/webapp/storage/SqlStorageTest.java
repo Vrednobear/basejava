@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class SqlStorageTest extends AbstractStorageTest {
     public SqlStorageTest() {
-        super(new SqlStorage(Config.getInstance().getDbUrl(),Config.getInstance().getDbUser(),Config.getInstance().getDbPassword()));
+        super(Config.getInstance().getStorage());
        // super(new SqlStorage(config.getDbUrl(),config.getDbUser(),config.getDbPassword()));
     }
 }
