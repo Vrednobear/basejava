@@ -26,21 +26,23 @@ public abstract class AbstractStorageTest {
     public static final String FULLNAME_3 = "fullName3";
     public static final String FULLNAME_4 = "fullName4";
 
-    //    private static final Resume RESUME_1;
+    private static final Resume RESUME_1;
     private static final Resume RESUME_2;
-//    private static final Resume RESUME_3;
-//    private static final Resume RESUME_4;
-    private static final Resume RESUME_1 = new Resume(UUID_1, FULLNAME_1);
+    private static final Resume RESUME_3;
+    private static final Resume RESUME_4;
+//    private static final Resume RESUME_1 = new Resume(UUID_1, FULLNAME_1);
 //    private static final Resume RESUME_2 = new Resume(UUID_2, FULLNAME_2);
-      private static final Resume RESUME_3 = new Resume(UUID_3, FULLNAME_3);
-      private static final Resume RESUME_4 = new Resume(UUID_4, FULLNAME_4);
+//      private static final Resume RESUME_3 = new Resume(UUID_3, FULLNAME_3);
+//     private static final Resume RESUME_4 = new Resume(UUID_4, FULLNAME_4);
 
     static {
-//        RESUME_3 = ResumeTestData.createResume(UUID_3,FULLNAME_3);
-//        RESUME_4 = ResumeTestData.createResume(UUID_4,FULLNAME_4);
-//
-//        RESUME_1 = ResumeTestData.createResume(UUID_1, FULLNAME_1);
+        RESUME_3 = ResumeTestData.createResume(UUID_3,FULLNAME_3);
+        RESUME_4 = ResumeTestData.createResume(UUID_4,FULLNAME_4);
+        RESUME_1 = ResumeTestData.createResume(UUID_1, FULLNAME_1);
+
         RESUME_2 = new Resume(UUID_2, FULLNAME_2);
+        RESUME_2.addContact(ContactType.PHONE,"43424");
+        RESUME_2.addContact(ContactType.SKYPE,"resume2sk");
 //        RESUME_2.addSection(SectionType.OBJECTIVE, new TextSection("Text Section 1 obj"));
 //        RESUME_2.addSection(SectionType.PERSONAL, new TextSection("Text Section1 pers"));
 //        RESUME_2.addSection(SectionType.ACHIEVEMENT, new ListSection("achievement1.", "achievement2."));
@@ -96,6 +98,8 @@ public abstract class AbstractStorageTest {
     @Test
     public void update() {
         Resume newResume = new Resume(UUID_1, "New");
+        newResume.addContact(ContactType.PHONE,"3232");
+        newResume.addContact(ContactType.SKYPE,"updateSk");
      //   Resume newResume = ResumeTestData.createResume(UUID_1,"New");
         storage.update(newResume);
        // Assert.assertTrue(newResume == storage.get(UUID_1));
@@ -143,7 +147,7 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() {
         List<Resume> list = storage.getAllSorted();
         Assert.assertEquals(3, list.size());
-        Assert.assertEquals(list, Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
+        Assert.assertEquals(Arrays.asList(RESUME_1, RESUME_2, RESUME_3),list);
 //        Assert.assertEquals(RESUME_1, list.get(0));
 //        Assert.assertEquals(RESUME_2, list.get(1));
 //        Assert.assertEquals(RESUME_3, list.get(2));
