@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.Properties;
 
 public class Config {
+  //  protected static final File PROPERTY_FILE = new File(getHomeDir(), "config\\resumes.properties");
     protected static final File PROPERTY_FILE = new File("D:\\Inteships\\basejava\\config\\resumes.properties");
     private static final Config INSTANCE = new Config();
     private final Properties props = new Properties();
@@ -52,6 +53,14 @@ public class Config {
 
     public String getDbPassword() {
         return dbPassword;
+    }
+
+    private static String getHomeDir(){
+        String homeDir = System.getProperty("homeDir");
+        File file = new File(homeDir == null ? "." : homeDir);
+        if(!file.isDirectory()){
+            throw new IllegalStateException("Invalid config file" + PROPERTY_FILE.getAbsolutePath());
+        }return homeDir;
     }
 }
 
