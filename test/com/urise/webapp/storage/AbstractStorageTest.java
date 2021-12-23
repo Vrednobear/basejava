@@ -30,10 +30,7 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_2;
     private static final Resume RESUME_3;
     private static final Resume RESUME_4;
-//    private static final Resume RESUME_1 = new Resume(UUID_1, FULLNAME_1);
-//    private static final Resume RESUME_2 = new Resume(UUID_2, FULLNAME_2);
-//      private static final Resume RESUME_3 = new Resume(UUID_3, FULLNAME_3);
-//     private static final Resume RESUME_4 = new Resume(UUID_4, FULLNAME_4);
+
 
     static {
         RESUME_3 = ResumeTestData.createResume(UUID_3,FULLNAME_3);
@@ -43,25 +40,25 @@ public abstract class AbstractStorageTest {
         RESUME_2 = new Resume(UUID_2, FULLNAME_2);
         RESUME_2.addContact(ContactType.PHONE,"43424");
         RESUME_2.addContact(ContactType.SKYPE,"resume2sk");
-//        RESUME_2.addSection(SectionType.OBJECTIVE, new TextSection("Text Section 1 obj"));
-//        RESUME_2.addSection(SectionType.PERSONAL, new TextSection("Text Section1 pers"));
-//        RESUME_2.addSection(SectionType.ACHIEVEMENT, new ListSection("achievement1.", "achievement2."));
-//        RESUME_2.addSection(SectionType.QUALIFICATIONS, new ListSection("qualification1.", "qualification2."));
-//        RESUME_2.addSection(SectionType.EXPERIENCE, new OrganizationSection(
-//                new Organization("Microsoft", "ms.com",
-//                        new Experience(2021, Month.APRIL, "Developer", "Created Bing")),
-//                new Organization("Apple", "apple.com",
-//                        new Experience(2015, Month.FEBRUARY, 2020, Month.DECEMBER, "Developer", "Created Siri"))
-//        ));
-//        RESUME_2.addSection(SectionType.EDUCATION, new OrganizationSection(
-//                new Organization("MIT", "MIT.com",
-//                        new Experience(2013, Month.APRIL, "Assistent",null)),
-//                new Organization("CalTech", "CaTech.com",
-//                        new Experience(2007, Month.SEPTEMBER, 2011, Month.JUNE, "Bachelor",null),
-//                        new Experience(2011,Month.SEPTEMBER,2013,Month.JUNE,"Master",null))
-//        ));
-//
-//        System.out.println(RESUME_2.getSection(SectionType.EDUCATION));
+        RESUME_2.addSection(SectionType.OBJECTIVE, new TextSection("Text Section 1 obj"));
+        RESUME_2.addSection(SectionType.PERSONAL, new TextSection("Text Section1 pers"));
+        RESUME_2.addSection(SectionType.ACHIEVEMENT, new ListSection("achievement1.", "achievement2."));
+        RESUME_2.addSection(SectionType.QUALIFICATIONS, new ListSection("qualification1.", "qualification2."));
+        RESUME_2.addSection(SectionType.EXPERIENCE, new OrganizationSection(
+                new Organization("Microsoft", "ms.com",
+                        new Experience(2021, Month.APRIL, "Developer", "Created Bing")),
+                new Organization("Apple", "apple.com",
+                        new Experience(2015, Month.FEBRUARY, 2020, Month.DECEMBER, "Developer", "Created Siri"))
+        ));
+        RESUME_2.addSection(SectionType.EDUCATION, new OrganizationSection(
+                new Organization("MIT", "MIT.com",
+                        new Experience(2013, Month.APRIL, "Assistent",null)),
+                new Organization("CalTech", "CaTech.com",
+                        new Experience(2007, Month.SEPTEMBER, 2011, Month.JUNE, "Bachelor",null),
+                        new Experience(2011,Month.SEPTEMBER,2013,Month.JUNE,"Master",null))
+        ));
+
+        System.out.println(RESUME_2.getSection(SectionType.EDUCATION));
     }
 
     protected Storage storage;
@@ -100,6 +97,8 @@ public abstract class AbstractStorageTest {
         Resume newResume = new Resume(UUID_1, "New");
         newResume.addContact(ContactType.PHONE,"3232");
         newResume.addContact(ContactType.SKYPE,"updateSk");
+        newResume.addSection(SectionType.PERSONAL ,new TextSection("Ton manuch"));
+        newResume.addSection(SectionType.OBJECTIVE ,new TextSection("Ton object"));
      //   Resume newResume = ResumeTestData.createResume(UUID_1,"New");
         storage.update(newResume);
        // Assert.assertTrue(newResume == storage.get(UUID_1));
