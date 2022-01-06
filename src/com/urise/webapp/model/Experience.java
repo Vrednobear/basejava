@@ -16,6 +16,7 @@ import static com.urise.webapp.util.DateUtil.NOW;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Experience implements Serializable {
+    public static final Experience EMPTY = new Experience();
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate startDate;
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
@@ -79,11 +80,17 @@ public class Experience implements Serializable {
 
     @Override
     public String toString() {
-        return "Experience{" + "\n" +
-                "startDate=" + startDate + "\n" +
-                ", endDate=" + endDate + "\n" +
-                ", title='" + title + "\n" +
-                ", description='" + description + "\n" +
-                '}';
+        String desc;
+        if(description.equals("")){
+            desc="\r";
+        }else{
+            desc="Description: " + description + "\n\r";
+        }
+        return  "Start Date: " + startDate + "\n" +
+                "End Date: " + endDate + "\n" +
+                "Title: " + title + "\n" +
+                desc;
+
+
     }
 }

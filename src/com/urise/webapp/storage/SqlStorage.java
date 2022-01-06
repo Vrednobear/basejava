@@ -213,7 +213,7 @@ public class SqlStorage implements Storage {
     public void insertContacts(Resume r, Connection connection) throws SQLException {
         try (PreparedStatement ps = connection.prepareStatement(
                 "INSERT INTO contact (type, value, resume_uuid) " +
-                        "Values(?,?,?)")){
+                        "Values(?,?,?)")) {
             for (Map.Entry<ContactType, String> entry :
                     r.getContacts().entrySet()) {
                 setContactsPreparedStatement(ps, r, entry);
@@ -294,6 +294,7 @@ public class SqlStorage implements Storage {
     private void addSection(ResultSet rs, Resume resume, Connection connection) throws SQLException {
         String value = rs.getString("section");
         SectionType type = SectionType.valueOf(rs.getString("type"));
+        int secId = rs.getInt("id");
         switch (type) {
             case PERSONAL:
             case OBJECTIVE:
@@ -319,23 +320,24 @@ public class SqlStorage implements Storage {
                                 "from organization o " +
                                 "LEFT JOIN experience e " +
                                 "ON(o.id = e.organization_id) " +
-                                "ORDER BY section_id")) {
+                                //   "ORDER BY section_id" +
+                                "WHERE section_id=?"
+                )) {
+                    ps.setInt(1, secId);
                     ResultSet resultSet = ps.executeQuery();
                     List<Integer> sectionIdList = new ArrayList<>();
                     Set<Organization> organizationSet = new HashSet<>();
 
                     while (resultSet.next()) {
-                        if (!sectionIdList.contains(resultSet.getInt("section_id"))) {
-                            if (sectionIdList.size() != 0) {
-                                resume.addSection(type, new OrganizationSection(organizationSet));
-                                organizationSet.clear();
-                            }
-                            sectionIdList.add(resultSet.getInt("section_id"));
-                            createOrganizationWithExperience(resultSet, organizationSet);
-                        } else {
-                            createOrganizationWithExperience(resultSet, organizationSet);
-                        }
+                        createOrganizationWithExperience(resultSet, organizationSet);
+//                        if (!sectionIdList.contains(resultSet.getInt("section_id"))) {
+//                            sectionIdList.add(resultSet.getInt("section_id"));
+//                            createOrganizationWithExperience(resultSet, organizationSet);
+//                        } else {
+//                            createOrganizationWithExperience(resultSet, organizationSet);
+//                        }
                     }
+                    resume.addSection(type, new OrganizationSection(organizationSet));
                 }
         }
     }
@@ -350,6 +352,16 @@ public class SqlStorage implements Storage {
                 resultSet.getString("organization_name"),
                 resultSet.getString("organization_link"),
                 experience);
+        if (organizationSet.contains(organization)) {
+            for (Organization o :
+                    organizationSet) {
+                if (o.equals(organization)) {
+                    o.addExperience(experience);
+                    organizationSet.add(o);
+                    return;
+                }
+            }
+        }
         organizationSet.add(organization);
     }
 
@@ -379,7 +391,7 @@ public class SqlStorage implements Storage {
             case ACHIEVEMENT:
                 ListSection ls = (ListSection) entry.getValue();
                 List<String> values = ls.getValues();
-                Iterator <String> iterator = values.iterator();
+                Iterator<String> iterator = values.iterator();
                 while (iterator.hasNext()) {
                     sb.append(iterator.next()).append("\n");
                 }

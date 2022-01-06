@@ -1,5 +1,7 @@
 package com.urise.webapp.model;
 
+import com.urise.webapp.util.DateUtil;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.*;
@@ -22,11 +24,9 @@ public class OrganizationSection extends Section {
         this.organizations = organizations;
     }
 
-
     public Set<Organization> getOrganizations() {
         return organizations;
     }
-
 
     public void putOrganization(Organization organization) {
         if (!organizations.contains(organization)) {
@@ -49,6 +49,42 @@ public class OrganizationSection extends Section {
 
     @Override
     public String toString() {
-        return organizations.toString();
+        StringBuilder builder = new StringBuilder();
+        for (Organization o :
+                organizations) {
+            builder.append("Organization: " + o.getOrganizationName() + "\n");
+            builder.append("Web-site: " + o.getOrganizationLink().getUrl() + "\n");
+            for (Experience e :
+                    o.getExperiences()) {
+                builder.append(e.toString());
+            }
+        }
+        return builder.toString();
+    }
+
+    @Override
+    public String toHtml() {
+        StringBuilder builder = new StringBuilder();
+        for (Organization organization :
+                organizations) {
+            builder.append("<h2>" + organization.getOrganizationName() + "</h2>");
+            builder.append("<p><a href=" + organization.getOrganizationLink().getUrl() + ">Web-site</a></p>");
+            for (Experience e :
+                    organization.experiences) {
+                builder.append("<nav>");
+                builder.append("<p>" + e.getStartDate() + " -" + "</p>");
+                if (!(e.getEndDate().isEqual(DateUtil.NOW))) {
+                    builder.append("<p>" + e.getEndDate() + "</p>");
+                } else builder.append("<p>" + "Now" + "</p>");
+
+                builder.append("</nav>");
+
+                builder.append("<article>");
+                builder.append("<p>" + e.getTitle() + "</p>");
+                builder.append("<p>" + e.getDescription() + "</p>");
+                builder.append("</article>");
+            }
+        }
+        return builder.toString();
     }
 }

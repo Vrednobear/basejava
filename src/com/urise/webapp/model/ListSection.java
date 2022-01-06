@@ -2,13 +2,11 @@ package com.urise.webapp.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ListSection extends Section {
+    public static final Section EMPTY = new ListSection("") ;
     private static final long serialVersionUID = 1L;
     private List<String> values;
 
@@ -43,8 +41,20 @@ public class ListSection extends Section {
 
     @Override
     public String toString() {
-        return values.toString();
+        StringBuilder builder = new StringBuilder();
+        for (String v :
+                values) {
+            builder.append(v + "\n");
+        }
+        return builder.toString();
     }
 
-
+    public String toHtml(){
+        StringBuilder builder = new StringBuilder();
+        for (String v :
+                values) {
+            builder.append("<li>"+ v +"</li>");
+        }
+        return builder.toString();
+    }
 }

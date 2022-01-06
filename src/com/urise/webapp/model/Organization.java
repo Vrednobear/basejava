@@ -10,6 +10,7 @@ import java.util.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
+    public static final Organization EMPTY = new Organization("", "", Experience.EMPTY);
     private String organizationName;
     private Link organizationLink;
 
